@@ -66,7 +66,7 @@
     <div class="icon">🖼️</div>
     <h2>Infographic</h2>
     <p class="desc">Architecture and flow at a glance.</p>
-    <img id="infographic" class="artefact" alt="Project infographic">
+    <a id="infographic-link" href="#" target="_blank"><img id="infographic" class="artefact" alt="Project infographic"></a>
   </div>
 
   <div class="card" id="s-slides">
@@ -94,7 +94,12 @@ const ARTEFACTS = {
     for (const f of cfg.files) {
       try {
         const r = await fetch(f, { method: 'HEAD' });
-        if (r.ok) { document.getElementById(cfg.el)[cfg.attr] = f; found = true; break; }
+        if (r.ok) {
+          document.getElementById(cfg.el)[cfg.attr] = f;
+          const link = document.getElementById(cfg.el + '-link');
+          if (link) link.href = f;
+          found = true; break;
+        }
       } catch {}
     }
     if (!found) document.getElementById(cfg.section).classList.add('hidden');
